@@ -1,5 +1,6 @@
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+
 import Showcase3D from './components/Showcase3D';
 import Features from './components/Features';
 import HowItWorks from './components/HowItWorks';
@@ -12,6 +13,7 @@ function App() {
     <div className="App">
       <Navbar />
       <Hero />
+  
       <Showcase3D />
       <Features />
       <HowItWorks />
