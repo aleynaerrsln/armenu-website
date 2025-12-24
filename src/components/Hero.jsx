@@ -1,7 +1,7 @@
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, useGLTF } from '@react-three/drei';
-import { Suspense, useRef } from 'react';
+import { Suspense, useRef, useState } from 'react';
 import './Hero.css';
 
 function TableModel() {
@@ -9,7 +9,7 @@ function TableModel() {
   return <primitive object={scene} scale={[1.5, 1.2, 1.5]} position={[-1.7, -1.5, 0.1]} />;
 }
 
-function PizzaModel({ position }) {
+function PizzaModel({ position, onClick }) {
   const meshRef = useRef();
   const { scene } = useGLTF('/models/pizza2.glb');
   
@@ -20,13 +20,22 @@ function PizzaModel({ position }) {
   });
   
   return (
-    <group ref={meshRef} position={position}>
+    <group 
+      ref={meshRef} 
+      position={position}
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick && onClick();
+      }}
+      onPointerOver={() => document.body.style.cursor = 'pointer'}
+      onPointerOut={() => document.body.style.cursor = 'default'}
+    >
       <primitive object={scene.clone()} scale={0.7} rotation={[0, 0, 0]} />
     </group>
   );
 }
 
-function Food2Model({ position }) {
+function Food2Model({ position, onClick }) {
   const meshRef = useRef();
   const { scene } = useGLTF('/models/food22.glb');
   
@@ -37,13 +46,76 @@ function Food2Model({ position }) {
   });
   
   return (
-    <group ref={meshRef} position={position}>
+    <group 
+      ref={meshRef} 
+      position={position}
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick && onClick();
+      }}
+      onPointerOver={() => document.body.style.cursor = 'pointer'}
+      onPointerOut={() => document.body.style.cursor = 'default'}
+    >
       <primitive object={scene.clone()} scale={2.4} rotation={[0, 0, 0]} />
     </group>
   );
 }
 
+function FoodModal({ food, onClose }) {
+  if (!food) return null;
+  
+  return (
+    <motion.div 
+      className="food-modal-overlay"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onClick={onClose}
+    >
+      <motion.div 
+        className="food-modal"
+        initial={{ scale: 0.8, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.8, opacity: 0 }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button className="modal-close" onClick={onClose}>✕</button>
+        
+        <div className="food-modal-canvas">
+          <Canvas camera={{ position: [0, 0, 3], fov: 50 }}>
+            <Suspense fallback={null}>
+              <ambientLight intensity={1} />
+              <directionalLight position={[5, 5, 5]} intensity={1.5} />
+              <pointLight position={[-5, -5, -5]} intensity={0.5} />
+              
+              {food.type === 'pizza' ? (
+                <PizzaModel position={[0, 0, 0]} />
+              ) : (
+                <Food2Model position={[0, 0, 0]} />
+              )}
+              
+              <OrbitControls 
+                enableZoom={true}
+                enablePan={true}
+                autoRotate={true}
+                autoRotateSpeed={3}
+              />
+            </Suspense>
+          </Canvas>
+        </div>
+        
+        <div className="food-modal-info">
+          <h3>{food.name}</h3>
+          <p>🖱️ Fare ile döndürün • 🔍 Yakınlaştırın</p>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
 function Hero() {
+  const [selectedFood, setSelectedFood] = useState(null);
+
   return (
     <section id="home" className="hero">
       <div className="container">
@@ -90,31 +162,54 @@ function Hero() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3, duration: 1 }}
           >
-<Canvas 
-  camera={{ position: [3, 2, 3], fov: 45 }}
-  style={{ width: '100%', height: '100%' }}
->
-  <Suspense fallback={null}>
-    <ambientLight intensity={1} />
-    <directionalLight position={[5, 5, 5]} intensity={1.5} />
-    
-    <TableModel />
-    
-    <PizzaModel position={[0.9, -0.55, -0.55]} />
-    <Food2Model position={[-0.3, -0.55, -0.55]} />
-    <PizzaModel position={[0.9, -0.55, -1.4]} />
-    <Food2Model position={[-0.3, -0.55, -1.4]} />
-    
-    <OrbitControls 
-      enableZoom={true}
-      enablePan={false}
-      target={[0.9, -0.8, -0.5]}
-    />
-  </Suspense>
-</Canvas>
+            <Canvas 
+              camera={{ position: [3, 2, 3], fov: 45 }}
+              style={{ width: '100%', height: '100%' }}
+              
+            >
+              <Suspense fallback={null}>
+                <ambientLight intensity={1} />
+                <directionalLight position={[5, 5, 5]} intensity={1.5} />
+                
+                <TableModel />
+                
+                <PizzaModel 
+                  position={[0.9, -0.55, -0.55]} 
+                  onClick={() => setSelectedFood({ type: 'pizza', name: 'Margarita Pizza' })}
+                />
+                <Food2Model 
+                  position={[-0.3, -0.55, -0.55]} 
+                  onClick={() => setSelectedFood({ type: 'food', name: 'Özel Yemek' })}
+                />
+                <PizzaModel 
+                  position={[0.9, -0.55, -1.4]} 
+                  onClick={() => setSelectedFood({ type: 'pizza', name: 'Margarita Pizza' })}
+                />
+                <Food2Model 
+                  position={[-0.3, -0.55, -1.4]} 
+                  onClick={() => setSelectedFood({ type: 'food', name: 'Özel Yemek' })}
+                />
+                
+                <OrbitControls 
+                  enableZoom={true}
+                  enablePan={false}
+                  target={[0.9, -0.8, -0.5]}
+                  
+                />
+              </Suspense>
+            </Canvas>
           </motion.div>
         </div>
       </div>
+
+      <AnimatePresence>
+        {selectedFood && (
+          <FoodModal 
+            food={selectedFood} 
+            onClose={() => setSelectedFood(null)} 
+          />
+        )}
+      </AnimatePresence>
     </section>
   );
 }
