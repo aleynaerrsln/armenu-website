@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './Navbar.css';
 
 function Navbar() {
@@ -9,13 +10,15 @@ function Navbar() {
       <div className="container">
         <div className="nav-wrapper">
           <div className="logo">
-            <h2>AR Menü</h2>
+            <Link to="/">
+              <h2>AR Menü</h2>
+            </Link>
           </div>
 
           <ul className={`nav-links ${isOpen ? 'active' : ''}`}>
-            <li><a href="#home">Ana Sayfa</a></li>
-            <li><a href="#showcase">Özellikler</a></li>
-            <li><a href="#how-it-works">Nasıl Çalışır</a></li>
+            <li><Link to="/">Ana Sayfa</Link></li>
+            <li><Link to="/menu">Menü</Link></li>
+            <li><Link to="/pricing">Fiyatlandırma</Link></li>
             <li><a href="#contact">İletişim</a></li>
           </ul>
 
