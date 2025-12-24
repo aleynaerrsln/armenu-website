@@ -1,19 +1,46 @@
 import { motion } from 'framer-motion';
-import { Canvas } from '@react-three/fiber';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, useGLTF } from '@react-three/drei';
-import { Suspense } from 'react';
+import { Suspense, useRef } from 'react';
 import './Hero.css';
 
-function PizzaModel() {
-  const { scene } = useGLTF('/models/pizza2.glb');
-  scene.rotation.x = -Math.PI / 3;
-  return <primitive object={scene} scale={2} />;
+function TableModel() {
+  const { scene } = useGLTF('/models/dinner-table.glb');
+  return <primitive object={scene} scale={[1.5, 1.2, 1.5]} position={[-1.7, -1.5, 0.1]} />;
 }
 
-function Food2Model() {
+function PizzaModel({ position }) {
+  const meshRef = useRef();
+  const { scene } = useGLTF('/models/pizza2.glb');
+  
+  useFrame(() => {
+    if (meshRef.current) {
+      meshRef.current.rotation.y += 0.01;
+    }
+  });
+  
+  return (
+    <group ref={meshRef} position={position}>
+      <primitive object={scene.clone()} scale={0.7} rotation={[0, 0, 0]} />
+    </group>
+  );
+}
+
+function Food2Model({ position }) {
+  const meshRef = useRef();
   const { scene } = useGLTF('/models/food22.glb');
-  scene.rotation.x = -Math.PI / 3;
-  return <primitive object={scene} scale={6} />;
+  
+  useFrame(() => {
+    if (meshRef.current) {
+      meshRef.current.rotation.y += 0.01;
+    }
+  });
+  
+  return (
+    <group ref={meshRef} position={position}>
+      <primitive object={scene.clone()} scale={2.4} rotation={[0, 0, 0]} />
+    </group>
+  );
 }
 
 function Hero() {
@@ -58,44 +85,33 @@ function Hero() {
           </motion.div>
 
           <motion.div 
-            className="hero-image"
+            className="hero-table-scene"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3, duration: 1 }}
           >
-            <div className="showcase-3d-hero">
-              <Canvas camera={{ position: [0, 0, 2], fov: 50 }}>
-                <Suspense fallback={null}>
-                  <ambientLight intensity={0.8} />
-                  <directionalLight position={[10, 10, 5]} intensity={1} />
-                  <PizzaModel />
-                  <OrbitControls 
-                    enableZoom={true}
-                    enablePan={false}
-                    autoRotate={true}
-                    autoRotateSpeed={2}
-                  />
-                </Suspense>
-              </Canvas>
-            </div>
-
-
-
-            <div className="showcase-3d-hero showcase-3d-hero-2">
-              <Canvas camera={{ position: [0, 0, 2], fov: 50 }}>
-                <Suspense fallback={null}>
-                  <ambientLight intensity={0.8} />
-                  <directionalLight position={[10, 10, 5]} intensity={1} />
-                  <Food2Model />
-                  <OrbitControls 
-                    enableZoom={true}
-                    enablePan={false}
-                    autoRotate={true}
-                    autoRotateSpeed={2}
-                  />
-                </Suspense>
-              </Canvas>
-            </div>
+<Canvas 
+  camera={{ position: [3, 2, 3], fov: 45 }}
+  style={{ width: '100%', height: '100%' }}
+>
+  <Suspense fallback={null}>
+    <ambientLight intensity={1} />
+    <directionalLight position={[5, 5, 5]} intensity={1.5} />
+    
+    <TableModel />
+    
+    <PizzaModel position={[0.9, -0.55, -0.55]} />
+    <Food2Model position={[-0.3, -0.55, -0.55]} />
+    <PizzaModel position={[0.9, -0.55, -1.4]} />
+    <Food2Model position={[-0.3, -0.55, -1.4]} />
+    
+    <OrbitControls 
+      enableZoom={true}
+      enablePan={false}
+      target={[0.9, -0.8, -0.5]}
+    />
+  </Suspense>
+</Canvas>
           </motion.div>
         </div>
       </div>
