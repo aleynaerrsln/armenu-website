@@ -1,5 +1,6 @@
 import Hero from '../components/Hero';
 import Showcase3D from '../components/Showcase3D';
+import Partners from '../components/Partners';
 import Features from '../components/Features';
 import HowItWorks from '../components/HowItWorks';
 import Contact from '../components/Contact';
@@ -9,6 +10,7 @@ function Home() {
     <>
       <Hero />
       <Showcase3D />
+      <Partners />
       <Features />
       <HowItWorks />
       <Contact />

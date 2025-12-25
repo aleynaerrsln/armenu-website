@@ -14,10 +14,10 @@ function Showcase3D() {
       <div className="container">
         <div className="showcase-content">
           <div className="showcase-text">
-            <h2>Yemeklerinizi<br />Artırılmış Gerçekliğe<br />uyarlıyoruz.</h2>
+            <h2>3D Modelleme<br />Hizmetimiz</h2>
             <p>
-              Fikri çok beğendiniz ama gerekli 3D modellere sahip değil misiniz? 
-              Endişelenmeyin, yemeklerinizin modellerini oluşturma işini biz üstlenebiliriz.
+              Menünüzdeki yemeklerin 3D modellerini profesyonelce oluşturuyoruz.
+              Gerçekçi görünümler ve detaylı tasarımlarla müşterilerinize unutulmaz bir deneyim sunun.
             </p>
           </div>
 
