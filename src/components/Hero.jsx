@@ -61,6 +61,115 @@ function Food2Model({ position, onClick }) {
   );
 }
 
+function Food3Model({ position, onClick }) {
+  const meshRef = useRef();
+  const { scene } = useGLTF('/models/food33.glb');
+  
+  useFrame(() => {
+    if (meshRef.current) {
+      meshRef.current.rotation.y += 0.01;
+    }
+  });
+  
+  return (
+    <group 
+      ref={meshRef} 
+      position={position}
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick && onClick();
+      }}
+      onPointerOver={() => document.body.style.cursor = 'pointer'}
+      onPointerOut={() => document.body.style.cursor = 'default'}
+    >
+      <primitive object={scene.clone()} scale={0.21} rotation={[0, 0, 0]} />
+    </group>
+  );
+}
+
+function Food4Model({ position, onClick }) {
+  const meshRef = useRef();
+  const { scene } = useGLTF('/models/food4.glb');
+  
+  useFrame(() => {
+    if (meshRef.current) {
+      meshRef.current.rotation.y += 0.01;
+    }
+  });
+  
+  return (
+    <group 
+      ref={meshRef} 
+      position={position}
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick && onClick();
+      }}
+      onPointerOver={() => document.body.style.cursor = 'pointer'}
+      onPointerOut={() => document.body.style.cursor = 'default'}
+    >
+      <primitive object={scene.clone()} scale={0.41} rotation={[0, 0, 0]} />
+    </group>
+  );
+}
+
+function Food5Model({ position, onClick }) {
+  const meshRef = useRef();
+  const { scene } = useGLTF('/models/food3.glb');
+  
+  useFrame(() => {
+    if (meshRef.current) {
+      meshRef.current.rotation.y += 0.01;
+    }
+  });
+  
+  return (
+    <group 
+      ref={meshRef} 
+      position={position}
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick && onClick();
+      }}
+      onPointerOver={() => document.body.style.cursor = 'pointer'}
+      onPointerOut={() => document.body.style.cursor = 'default'}
+    >
+      <primitive object={scene.clone()} scale={1.5} rotation={[0, 2, 0]} />
+    </group>
+  );
+}
+
+function Food6Model({ position, onClick }) {
+  const meshRef = useRef();
+  const { scene } = useGLTF('/models/food5.glb');
+  
+  useFrame(() => {
+    if (meshRef.current) {
+      meshRef.current.rotation.y += 0.01;
+    }
+  });
+  
+  return (
+    <group 
+      ref={meshRef} 
+      position={position}
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick && onClick();
+      }}
+      onPointerOver={() => document.body.style.cursor = 'pointer'}
+      onPointerOut={() => document.body.style.cursor = 'default'}
+    >
+      <primitive object={scene.clone()} scale={0.16} rotation={[0, 0, 0]} />
+    </group>
+  );
+}
+
+function CandleModel() {
+  const { scene } = useGLTF('/models/candle.glb');
+  return <primitive object={scene} scale={1.1} position={[0.3, -0.55, -0.95]} rotation={[0, 0, 0]} />;
+}
+
 function FoodModal({ food, onClose }) {
   if (!food) return null;
   
@@ -90,6 +199,14 @@ function FoodModal({ food, onClose }) {
               
               {food.type === 'pizza' ? (
                 <PizzaModel position={[0, 0, 0]} />
+              ) : food.type === 'food3' ? (
+                <Food3Model position={[0, 0, 0]} />
+              ) : food.type === 'food4' ? (
+                <Food4Model position={[0, 0, 0]} />
+              ) : food.type === 'food5' ? (
+                <Food5Model position={[0, 0, 0]} />
+              ) : food.type === 'food6' ? (
+                <Food6Model position={[0, 0, 0]} />
               ) : (
                 <Food2Model position={[0, 0, 0]} />
               )}
@@ -165,7 +282,6 @@ function Hero() {
             <Canvas 
               camera={{ position: [3, 2, 3], fov: 45 }}
               style={{ width: '100%', height: '100%' }}
-              
             >
               <Suspense fallback={null}>
                 <ambientLight intensity={1} />
@@ -173,28 +289,39 @@ function Hero() {
                 
                 <TableModel />
                 
+                {/* Mum - Masa ortası */}
+                <CandleModel />
+                
+                {/* Yemekler */}
                 <PizzaModel 
                   position={[0.9, -0.55, -0.55]} 
                   onClick={() => setSelectedFood({ type: 'pizza', name: 'Margarita Pizza' })}
                 />
-                <Food2Model 
+                <Food3Model 
                   position={[-0.3, -0.55, -0.55]} 
-                  onClick={() => setSelectedFood({ type: 'food', name: 'Özel Yemek' })}
-                />
-                <PizzaModel 
-                  position={[0.9, -0.55, -1.4]} 
-                  onClick={() => setSelectedFood({ type: 'pizza', name: 'Margarita Pizza' })}
+                  onClick={() => setSelectedFood({ type: 'food3', name: 'Özel Tatlı' })}
                 />
                 <Food2Model 
+                  position={[0.9, -0.55, -1.4]} 
+                  onClick={() => setSelectedFood({ type: 'food2', name: 'Özel Yemek' })}
+                />
+                <Food4Model 
                   position={[-0.3, -0.55, -1.4]} 
-                  onClick={() => setSelectedFood({ type: 'food', name: 'Özel Yemek' })}
+                  onClick={() => setSelectedFood({ type: 'food4', name: 'Özel Yemek 4' })}
+                />
+                <Food5Model 
+                  position={[1.5, -0.55, -0.95]} 
+                  onClick={() => setSelectedFood({ type: 'food5', name: 'Yeni Yemek' })}
+                />
+                <Food6Model 
+                  position={[-0.85, -0.55, -0.95]} 
+                  onClick={() => setSelectedFood({ type: 'food6', name: 'Son Yemek' })}
                 />
                 
                 <OrbitControls 
                   enableZoom={true}
                   enablePan={false}
                   target={[0.9, -0.8, -0.5]}
-                  
                 />
               </Suspense>
             </Canvas>
