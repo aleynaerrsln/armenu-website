@@ -219,3 +219,47 @@
   background: rgba(255,255,255,0.2);
   transform: rotate(90deg) scale(1.1);
 }
+
+.table-instruction {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 12px 20px;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  pointer-events: none;
+  animation: fadeInUp 1s ease-out 1.5s both;
+}
+
+.table-instruction span {
+  font-size: 15px;
+}
+
+.table-instruction p {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1f2937;
+  white-space: nowrap;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.hero-table-scene:hover .table-instruction {
+  opacity: 0.6;
+}

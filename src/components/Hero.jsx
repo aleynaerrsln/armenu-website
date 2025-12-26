@@ -168,9 +168,26 @@ function Food6Model({ position, onClick, isModal }) {
   );
 }
 
-function CandleModel() {
+function CandleModel({ onClick, isModal }) {
   const { scene } = useGLTF('/models/candle.glb');
-  return <primitive object={scene} scale={1.1} position={[0.3, -0.55, -0.95]} rotation={[0, 0, 0]} />;
+  
+  if (isModal) {
+    return <primitive object={scene.clone()} scale={2} position={[0, 0, 0]} />;
+  }
+  
+  return (
+    <primitive 
+      object={scene.clone()} 
+      scale={1.1} 
+      position={[0.3, -0.55, -0.95]} 
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick && onClick();
+      }}
+      onPointerOver={() => (document.body.style.cursor = 'pointer')}
+      onPointerOut={() => (document.body.style.cursor = 'default')}
+    />
+  );
 }
 
 function FoodModal({ food, onClose }) {
@@ -212,19 +229,21 @@ function FoodModal({ food, onClose }) {
             <ambientLight intensity={1.5} />
             <directionalLight position={[5, 5, 5]} intensity={1} />
 
-            {food.type === 'pizza' ? (
-              <PizzaModel position={[0, 0, 0]} isModal={true} />
-            ) : food.type === 'food3' ? (
-              <Food3Model position={[0, 0, 0]} isModal={true} />
-            ) : food.type === 'food4' ? (
-              <Food4Model position={[0, 0, 0]} isModal={true} />
-            ) : food.type === 'food5' ? (
-              <Food5Model position={[0, 0, 0]} isModal={true} />
-            ) : food.type === 'food6' ? (
-              <Food6Model position={[0, 0, 0]} isModal={true} />
-            ) : (
-              <Food2Model position={[0, 0, 0]} isModal={true} />
-            )}
+{food.type === 'pizza' ? (
+  <PizzaModel position={[0, 0, 0]} isModal={true} />
+) : food.type === 'candle' ? (
+  <CandleModel isModal={true} />
+) : food.type === 'food3' ? (
+  <Food3Model position={[0, 0, 0]} isModal={true} />
+) : food.type === 'food4' ? (
+  <Food4Model position={[0, 0, 0]} isModal={true} />
+) : food.type === 'food5' ? (
+  <Food5Model position={[0, 0, 0]} isModal={true} />
+) : food.type === 'food6' ? (
+  <Food6Model position={[0, 0, 0]} isModal={true} />
+) : (
+  <Food2Model position={[0, 0, 0]} isModal={true} />
+)}
 
             <OrbitControls enableZoom={true} autoRotate={false} />
           </Suspense>
@@ -317,7 +336,9 @@ function Hero() {
                 <directionalLight position={[5, 5, 5]} intensity={1.5} />
                 
                 <TableModel />
-                <CandleModel />
+<CandleModel 
+  onClick={() => setSelectedFood({ type: 'candle', name: 'Dekoratif Vazo' })}
+/>
                 
                 <PizzaModel 
                   position={[0.9, -0.55, -0.55]} 
@@ -325,23 +346,23 @@ function Hero() {
                 />
                 <Food3Model 
                   position={[-0.3, -0.55, -0.55]} 
-                  onClick={() => setSelectedFood({ type: 'food3', name: 'Özel Tatlı' })}
+                  onClick={() => setSelectedFood({ type: 'food3', name: 'Latte' })}
                 />
                 <Food2Model 
                   position={[0.9, -0.55, -1.4]} 
-                  onClick={() => setSelectedFood({ type: 'food2', name: 'Özel Yemek' })}
+                  onClick={() => setSelectedFood({ type: 'food2', name: 'Muzlu Çikolatalı Pankek' })}
                 />
                 <Food4Model 
                   position={[-0.3, -0.55, -1.4]} 
-                  onClick={() => setSelectedFood({ type: 'food4', name: 'Özel Yemek 4' })}
+                  onClick={() => setSelectedFood({ type: 'food4', name: 'Patates Kızartması ve Tost' })}
                 />
                 <Food5Model 
                   position={[1.5, -0.55, -0.95]} 
-                  onClick={() => setSelectedFood({ type: 'food5', name: 'Yeni Yemek' })}
+                  onClick={() => setSelectedFood({ type: 'food5', name: 'Patates Püresi Ve Mevsim Salata' })}
                 />
                 <Food6Model 
                   position={[-0.85, -0.55, -0.95]} 
-                  onClick={() => setSelectedFood({ type: 'food6', name: 'Son Yemek' })}
+                  onClick={() => setSelectedFood({ type: 'food6', name: 'Çikolatalı Pasta' })}
                 />
                 
                 <OrbitControls
@@ -363,6 +384,10 @@ function Hero() {
                 <HiArrowsExpand size={18} style={{position: 'absolute', top: -10, right: -8, opacity: 0.6}} />
               </div>
             </div>
+            <div className="table-instruction">
+  <span>💡</span>
+  <p>Yakınlaştırarak Yemeklere tıklayıp yakından inceleyebilirsiniz</p>
+</div>
           </motion.div>
         </div>
       </div>
