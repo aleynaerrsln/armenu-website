@@ -74,7 +74,7 @@ function Contact() {
               </div>
               <div className="info-text">
                 <span>Telefon</span>
-                <p>+90 555 555 55 55</p>
+                <p>+90 541 772 26 97</p>
               </div>
             </div>
             

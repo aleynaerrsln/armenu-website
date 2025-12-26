@@ -191,6 +191,17 @@
   border: none;
   border-radius: 28px;
   background: white;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.phone-screen::-webkit-scrollbar {
+  display: none;
+}
+
+.phone-screen {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 @media (max-width: 968px) {

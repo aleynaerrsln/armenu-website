@@ -4,7 +4,7 @@ function Pricing() {
   const plans = [
     {
       name: 'Basic',
-      price: '₺2,999',
+      price: '₺ 1.000',
       period: '/ay',
       description: 'Küçük işletmeler için',
       features: [
@@ -17,7 +17,7 @@ function Pricing() {
     },
     {
       name: 'Premium',
-      price: '₺5,999',
+      price: '₺2.000',
       period: '/ay',
       description: 'Büyüyen işletmeler için',
       features: [
