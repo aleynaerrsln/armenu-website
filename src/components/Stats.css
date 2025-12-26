@@ -1,0 +1,61 @@
+.stats-section {
+  width: 100%;
+  padding: 0;
+  overflow: hidden;
+  background: #f9fafb;
+  border-top: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
+  margin-top: -55px;
+}
+
+.marquee {
+  display: flex;
+  overflow: hidden;
+  user-select: none;
+  gap: 0;
+  padding: 25px 0;
+}
+
+.marquee-content {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: space-around;
+  gap: 0;
+  min-width: 100%;
+  animation: scroll-left 30s linear infinite;
+}
+
+.marquee-content span {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  letter-spacing: 1px;
+  color: #1f2937;
+  white-space: nowrap;
+  padding: 0 25px;
+  opacity: 0.8;
+}
+
+@keyframes scroll-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee:hover .marquee-content {
+  animation-play-state: paused;
+}
+
+@media (max-width: 768px) {
+  .marquee {
+    padding: 20px 0;
+  }
+
+  .marquee-content span {
+    font-size: 20px;
+    padding: 0 15px;
+  }
+}
