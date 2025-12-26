@@ -1,6 +1,8 @@
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Stage, useGLTF } from '@react-three/drei';
 import { Suspense } from 'react';
+import { FaHandPointer } from 'react-icons/fa';
+import { HiArrowsExpand } from 'react-icons/hi';
 import './Showcase3D.css';
 
 function PizzaModel() {
@@ -10,7 +12,7 @@ function PizzaModel() {
 
 function Showcase3D() {
   return (
-    <section id="showcase" className="showcase">
+    <section id="features" className="showcase">
       <div className="container">
         <div className="showcase-content">
           <div className="showcase-text">
@@ -35,8 +37,12 @@ function Showcase3D() {
                 />
               </Suspense>
             </Canvas>
-            <div className="canvas-info">
-              <p>🖱️ Fare ile döndürün • 🔍 Yakınlaştırın</p>
+            
+            <div className="drag-hint">
+              <div style={{position: 'relative'}}>
+                <FaHandPointer size={30} />
+                <HiArrowsExpand size={18} style={{position: 'absolute', top: -10, right: -8, opacity: 0.6}} />
+              </div>
             </div>
           </div>
         </div>
