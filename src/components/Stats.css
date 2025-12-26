@@ -2,10 +2,11 @@
   width: 100%;
   padding: 0;
   overflow: hidden;
-  background: #f9fafb;
-  border-top: 1px solid #e5e7eb;
-  border-bottom: 1px solid #e5e7eb;
+  background: var(--light-gray);
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
   margin-top: -55px;
+  transition: background-color 0.3s ease;
 }
 
 .marquee {
@@ -23,6 +24,8 @@
   gap: 0;
   min-width: 100%;
   animation: scroll-left 30s linear infinite;
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .marquee-content span {
@@ -30,7 +33,7 @@
   font-weight: 700;
   font-size: 28px;
   letter-spacing: 1px;
-  color: #1f2937;
+  color: var(--text-color);
   white-space: nowrap;
   padding: 0 25px;
   opacity: 0.8;

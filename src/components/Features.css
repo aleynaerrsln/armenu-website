@@ -1,6 +1,7 @@
 .features {
   padding: 100px 0;
-  background: white;
+  background: var(--bg-color);
+  transition: background-color 0.3s ease;
 }
 
 .features-header {
@@ -26,12 +27,13 @@
 }
 
 .feature-card {
-  background: var(--light-gray);
+  background: var(--card-bg);
   padding: 40px 30px;
   border-radius: 16px;
   text-align: center;
   transition: all 0.3s ease;
   cursor: pointer;
+  border: 1px solid var(--border-color);
 }
 
 .feature-card:hover {

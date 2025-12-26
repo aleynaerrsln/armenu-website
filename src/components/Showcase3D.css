@@ -1,6 +1,7 @@
 .showcase {
-  background: var(--light-gray);
+  background: var(--bg-color);
   padding: 100px 0;
+  transition: background-color 0.3s ease;
 }
 
 .showcase-content {
@@ -16,6 +17,7 @@
   font-size: 48px;
   letter-spacing: -1.5px;
   margin-bottom: 20px;
+  color: var(--text-color);
 }
 
 .showcase-text p {
@@ -26,6 +28,7 @@
   letter-spacing: 0px;
   margin-top: 20px;
   margin-bottom: 30px;
+  color: var(--gray);
 }
 
 .showcase-3d {
@@ -60,6 +63,8 @@
 
 .drag-hint > div {
   animation: swipeHint 2.5s ease-in-out infinite;
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 @keyframes swipeHint {

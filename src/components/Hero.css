@@ -119,6 +119,10 @@
   z-index: 10;
 }
 
+[data-theme='dark'] .drag-hint-hero {
+  color: #ffffff;
+}
+
 .hero-table-scene:hover .drag-hint-hero {
   opacity: 0.25;
 }
@@ -237,6 +241,10 @@
   animation: fadeInUp 1s ease-out 1.5s both;
 }
 
+[data-theme='dark'] .table-instruction {
+  background: rgba(0, 0, 0, 0.95);
+}
+
 .table-instruction span {
   font-size: 15px;
 }
@@ -247,6 +255,10 @@
   font-weight: 600;
   color: #1f2937;
   white-space: nowrap;
+}
+
+[data-theme='dark'] .table-instruction p {
+  color: #ffffff;
 }
 
 @keyframes fadeInUp {
